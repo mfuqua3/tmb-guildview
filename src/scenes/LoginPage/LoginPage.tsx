@@ -6,7 +6,7 @@ import {AuthApi} from "../../api/AuthApi";
 
 function LoginPage() {
     async function handleSignIn() {
-        const returnUrl = "http://localhost:3000/:token";
+        const returnUrl = "http://localhost:3000/login/:token";
         await AuthApi.discordConnect({returnUrl});
     }
     return (
