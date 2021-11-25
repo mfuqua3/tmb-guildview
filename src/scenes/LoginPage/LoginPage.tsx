@@ -1,9 +1,14 @@
 import React from "react";
 import {Box, Button, Typography} from "@mui/material";
 import "./LoginPage.css";
+import {AuthApi} from "../../api/AuthApi";
 
 
 function LoginPage() {
+    async function handleSignIn() {
+        const returnUrl = "http://localhost:3000/login/:token";
+        await AuthApi.discordConnect({returnUrl});
+    }
     return (
         <Box className={"login-container"}>
             <div className={"login-item"}>
@@ -19,7 +24,7 @@ function LoginPage() {
                 </Typography>
             </div>
             <div className={"login-item"}>
-                <Button color={"secondary"} variant={"contained"}>
+                <Button color={"secondary"} variant={"contained"} onClick={handleSignIn}>
                     Sign in with Discord
                 </Button>
             </div>
