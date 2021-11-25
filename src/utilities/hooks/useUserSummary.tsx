@@ -6,3 +6,4 @@ export function useUserSummary(): UserSummary | null {
     const {token} = useToken();
     return token?.payload.data ?? null;
 }
+
