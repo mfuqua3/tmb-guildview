@@ -1,5 +1,5 @@
 export interface GuildSummary {
-    id: number;
+    id: string;
     name: string;
     configured: boolean;
 }

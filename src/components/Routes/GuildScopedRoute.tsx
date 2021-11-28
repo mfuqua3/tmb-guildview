@@ -1,9 +1,9 @@
 import React from "react";
-import {useActiveGuild} from "../../utilities/hooks/useActiveGuild";
+import {useGuild} from "../../utilities/hooks/useGuild";
 import {useLocation, Outlet, Navigate} from "react-router-dom";
 
 function GuildScopedRoute() {
-    const guild = useActiveGuild();
+    const guild = useGuild();
     const location = useLocation();
 
     return(

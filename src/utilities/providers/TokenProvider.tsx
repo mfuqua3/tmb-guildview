@@ -17,14 +17,14 @@ export const TokenContext = createContext<TokenProviderState | null>(null);
 function TokenProvider({children} : TokenProviderProps) {
     const constants = GuildViewConstants.claims;
     const {getValue, setValue} = useSessionStorage(key);
-    const [token, setToken] = useState<JwtToken<UserSummary> | null>(null);
-    useEffect(()=>{
+    const [token, setToken] = useState<JwtToken<UserSummary> | null>(()=>{
         const currentToken = getValue();
         if(!currentToken){
-            return;
+            return null;
         }
-        updateToken(currentToken);
-    },[])
+        axios.defaults.headers.common = {'Authorization': `Bearer ${currentToken}`};
+        return decodeToken(currentToken);
+    });
     function updateToken(jwt: string): void {
         setValue(jwt);
         axios.defaults.headers.common = {'Authorization': `Bearer ${jwt}`};
