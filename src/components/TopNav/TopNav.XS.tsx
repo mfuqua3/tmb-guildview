@@ -6,6 +6,7 @@ import "./TopNav.css";
 import {useAuth} from "../../utilities/hooks/useAuth";
 import {useNavigate} from "react-router-dom";
 import TopNavMainMenu from "./TopNav.MainMenu";
+import TopNavUserMenu from "./TopNav.UserMenu";
 
 
 function TopNavXS() {
@@ -24,9 +25,7 @@ function TopNavXS() {
             </Grid>
             <Grid item>
                 {isAuthenticated &&
-                <IconButton color={"inherit"} aria-label={"menu"}>
-                    <AccountCircleIcon className={"menu-icon"}/>
-                </IconButton>}
+                <TopNavUserMenu />}
             </Grid>
         </Grid>
     );

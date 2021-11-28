@@ -4,19 +4,17 @@ import MenuIcon from "@mui/icons-material/Menu";
 import SportsEsportsIcon from '@mui/icons-material/SportsEsports';
 import {useGuild} from "../../utilities/hooks/useGuild";
 import {Link, useNavigate} from "react-router-dom";
+import {useMenu} from "../../utilities/hooks/useMenu";
 
 export interface TopNavMenuProps {
     edge?: false | "start" | "end" | undefined
 }
 
 function TopNavMainMenu(props: TopNavMenuProps) {
-    const [anchorEl, setAnchorEl] = React.useState<Element | ((element: Element) => Element) | null | undefined>(null);
-    const handleClose = () => {
-        setAnchorEl(null);
-    };
+    const {open, close, isOpen, anchorEl} = useMenu();
     const navigate = useNavigate();
     const handleGuildSelect = () => {
-        handleClose();
+        close();
         navigate("/guilds");
     }
     const [guild] = useGuild();
@@ -24,7 +22,7 @@ function TopNavMainMenu(props: TopNavMenuProps) {
         <>
             <IconButton edge={props.edge} color={"inherit"} aria-label={"menu"}
                         onClick={e => {
-                            setAnchorEl(e.currentTarget);
+                            open(e.currentTarget);
                         }}>
                 <MenuIcon className={"menu-icon"}/>
             </IconButton>
@@ -40,8 +38,8 @@ function TopNavMainMenu(props: TopNavMenuProps) {
                     vertical: 'top',
                     horizontal: 'right',
                 }}
-                open={Boolean(anchorEl)}
-                onClose={handleClose}>
+                open={isOpen}
+                onClose={close}>
                 <MenuItem color={"secondary"} onClick={handleGuildSelect}>
                     <ListItemIcon>
                         <SportsEsportsIcon/>

@@ -4,9 +4,9 @@ import {MenuContext} from "../providers/MenuProvider";
 export interface MenuProps {
     open(anchorEl: Element): void;
     close(): void;
+    anchorEl: Element | ((element: Element) => Element) | null | undefined;
     isOpen: boolean;
 }
-
 export function useMenu(): MenuProps {
     const state = useContext(MenuContext);
     if (state === null) {
@@ -26,6 +26,7 @@ export function useMenu(): MenuProps {
     return {
         open,
         close,
+        anchorEl: state.anchorEl,
         isOpen: id === state.menuId
     }
 }

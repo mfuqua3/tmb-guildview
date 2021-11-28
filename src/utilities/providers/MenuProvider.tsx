@@ -6,6 +6,7 @@ export interface MenuProviderProps {
 export interface MenuProviderState {
     open(anchorElement: Element): string;
     menuId: string;
+    anchorEl: Element | ((element: Element) => Element) | null | undefined;
 }
 export const MenuContext = React.createContext<MenuProviderState | null>(null);
 interface MenuObj {
@@ -27,6 +28,7 @@ function MenuProvider({children}: MenuProviderProps) {
     }
     const state:MenuProviderState = {
         open,
+        anchorEl: menu?.anchorEl,
         menuId: menu?.id ?? ""
     };
     return (

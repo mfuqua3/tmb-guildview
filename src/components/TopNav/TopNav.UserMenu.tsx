@@ -1,29 +1,18 @@
 import React from "react";
-import {useNavigate} from "react-router-dom";
-import {useGuild} from "../../utilities/hooks/useGuild";
 import {IconButton, ListItemIcon, ListItemText, Menu, MenuItem} from "@mui/material";
-import MenuIcon from "@mui/icons-material/Menu";
-import SportsEsportsIcon from "@mui/icons-material/SportsEsports";
 import {useMenu} from "../../utilities/hooks/useMenu";
+import AccountCircleIcon from "@mui/icons-material/AccountCircle";
+import PersonOutlineIcon from '@mui/icons-material/PersonOutline';
 
 function TopNavUserMenu() {
-    const {open, close, isOpen} = useMenu();
-    const handleClose = () => {
-        setAnchorEl(null);
-    };
-    const navigate = useNavigate();
-    const handleGuildSelect = () => {
-        handleClose();
-        navigate("/guilds");
-    }
-    const [guild] = useGuild();
+    const {open, close, isOpen, anchorEl} = useMenu();
     return (
         <>
-            <IconButton edge={props.edge} color={"inherit"} aria-label={"menu"}
+            <IconButton color={"inherit"} aria-label={"menu"}
                         onClick={e => {
-                            setAnchorEl(e.currentTarget);
+                            open(e.currentTarget);
                         }}>
-                <MenuIcon className={"menu-icon"}/>
+                <AccountCircleIcon className={"menu-icon"}/>
             </IconButton>
             <Menu
                 id="menu-appbar"
@@ -37,17 +26,18 @@ function TopNavUserMenu() {
                     vertical: 'top',
                     horizontal: 'right',
                 }}
-                open={Boolean(anchorEl)}
-                onClose={handleClose}>
-                <MenuItem color={"secondary"} onClick={handleGuildSelect}>
+                open={isOpen}
+                onClose={close}>
+                <MenuItem color={"secondary"}>
                     <ListItemIcon>
-                        <SportsEsportsIcon/>
+                        <PersonOutlineIcon/>
                     </ListItemIcon>
                     <ListItemText>
-                        {!!guild ? guild.name : "Select Guild"}
+                        Sign Out
                     </ListItemText>
                 </MenuItem>
             </Menu>
         </>
     )
 }
+export default React.memo(TopNavUserMenu);
