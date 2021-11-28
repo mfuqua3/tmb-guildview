@@ -1,4 +1,4 @@
-import React, {createContext, ReactNode} from "react";
+import React, {createContext, ReactNode, useEffect, useState} from "react";
 import {Role} from "../types";
 import {useToken} from "../hooks/useToken";
 import {withToken} from "./TokenProvider";
@@ -14,18 +14,18 @@ export interface AuthState {
 export const AuthContext = createContext<AuthState | null>(null);
 function AuthProvider({children}: AuthProviderProps) {
     const {updateToken, token} = useToken();
-    function isAuthenticated(): boolean {
-        const now = +Date.now()/1000;
+    function authenticated():boolean {
+        const now = +Date.now() / 1000;
         return !!token && token.payload.notBefore <= now && token.payload.expires > now;
     }
     function isInRole(role: Role): boolean {
-        if(!isAuthenticated())
+        if(!authenticated())
             return false;
         return token?.payload.data.roles.includes(role) ?? false;
     }
     const state: AuthState = {
         authenticate: updateToken,
-        isAuthenticated: isAuthenticated(),
+        isAuthenticated: authenticated(),
         isInRole
     }
     return (

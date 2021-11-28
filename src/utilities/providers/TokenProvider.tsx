@@ -1,7 +1,8 @@
-import React, {createContext, ReactNode, useState} from "react";
-import {JwtToken, JwtTokenHeader, JwtTokenPayload, UserSummary} from "../../models";
+import React, {createContext, ReactNode, useEffect, useState} from "react";
+import {GuildClaim, JwtToken, JwtTokenHeader, JwtTokenPayload, UserSummary} from "../../models";
 import {GuildViewConstants} from "../constants";
 import {useSessionStorage} from "../hooks/useSessionStorage";
+import axios from "axios";
 
 const key = "gv-accessToken";
 export interface TokenProviderProps {
@@ -17,11 +18,16 @@ function TokenProvider({children} : TokenProviderProps) {
     const constants = GuildViewConstants.claims;
     const {getValue, setValue} = useSessionStorage(key);
     const [token, setToken] = useState<JwtToken<UserSummary> | null>(()=>{
-        const currentValue = getValue();
-        return currentValue === null ? null : decodeToken(currentValue);
-    })
+        const currentToken = getValue();
+        if(!currentToken){
+            return null;
+        }
+        axios.defaults.headers.common = {'Authorization': `Bearer ${currentToken}`};
+        return decodeToken(currentToken);
+    });
     function updateToken(jwt: string): void {
         setValue(jwt);
+        axios.defaults.headers.common = {'Authorization': `Bearer ${jwt}`};
         setToken(decodeToken(jwt));
     }
     function decodeToken(value: string): JwtToken<UserSummary> {
@@ -45,6 +51,15 @@ function TokenProvider({children} : TokenProviderProps) {
     function decodePayload(payloadToken: string): JwtTokenPayload<UserSummary>{
         const decodedToken = atob(payloadToken);
         const tokenJson = JSON.parse(decodedToken);
+        const hasGuild = tokenJson.hasOwnProperty(constants.guildId);
+        let guildIdentity: GuildClaim | undefined;
+        if(hasGuild){
+            guildIdentity = {
+                id: tokenJson[constants.guildId],
+                name: tokenJson[constants.guildName],
+                role: tokenJson[constants.guildRole]
+            }
+        }
         return {
             notBefore: tokenJson[constants.notBefore],
             expires: tokenJson[constants.expires],
@@ -55,7 +70,8 @@ function TokenProvider({children} : TokenProviderProps) {
                 id: tokenJson[constants.userId],
                 username: tokenJson[constants.username],
                 email: tokenJson[constants.email],
-                roles: tokenJson[constants.roles]
+                roles: tokenJson[constants.roles],
+                activeGuild: guildIdentity
             }
         }
     }

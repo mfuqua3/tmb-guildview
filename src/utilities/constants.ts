@@ -8,6 +8,9 @@ export const GuildViewConstants = {
         expires: "exp",
         issuedAt: "iat",
         issuer: "iss",
-        audience: "aud"
+        audience: "aud",
+        guildId: "guild_id",
+        guildName: "guild_name",
+        guildRole: "guildRole"
     }
 }

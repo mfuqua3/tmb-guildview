@@ -10,10 +10,12 @@ export interface PrivateRouteProps {
 function PrivateRoute({role}: PrivateRouteProps) {
     const {isInRole, isAuthenticated} = useAuth();
     const location = useLocation();
-    const authorized = isAuthenticated && (!role || isInRole(role));
+    const authorized = (): boolean => {
+        return isAuthenticated && (!role || isInRole(role))
+    };
 
     return (
-        authorized ? <Outlet/> : <Navigate to={"/login"} state={{from: location}}/>
+        authorized() ? <Outlet/> : <Navigate to={"/login"} state={{from: location}}/>
     )
 }
 
