@@ -1,17 +1,17 @@
 import React from "react";
-import {GuildSummary} from "../../models";
+import {ServerSummary} from "../../models";
 import {Button, Grid, Paper, Typography} from "@mui/material";
 import {ScrollWrapper} from "../ScrollWrapper";
 import {useGuild} from "../../utilities/hooks/useGuild";
 
 export interface ConfiguredGuildsProps {
-    guilds: GuildSummary[];
+    servers: ServerSummary[];
 }
 
-function ConfiguredGuilds({guilds}: ConfiguredGuildsProps) {
+function ConfiguredGuilds({servers}: ConfiguredGuildsProps) {
     const [guild, changeGuild] = useGuild();
 
-    async function handleSelectGuild(id: string): Promise<void> {
+    async function handleSelectGuild(id: number): Promise<void> {
         await changeGuild(id);
     }
 
@@ -23,26 +23,26 @@ function ConfiguredGuilds({guilds}: ConfiguredGuildsProps) {
                    margin: "5px",
                    height: "90%"
                }}>
-            {guilds.length === 0 &&
+            {servers.length === 0 &&
             <Typography>
                 There are no guilds available to join
             </Typography>}
-            {guilds.length > 0 &&
+            {servers.length > 0 &&
             <ScrollWrapper>
                 <Grid container
                       direction={"column"}
                       alignItems={"center"}
                       justifyContent={"center"}
                       minHeight={"70%"}>
-                    {guilds.map(guild =>
+                    {servers.filter(s => !!s.guild).map(server =>
                         <Button variant={"outlined"}
                                 color={"secondary"}
                                 size={"large"}
-                                onClick={() => handleSelectGuild(guild.id)}
+                                onClick={() => handleSelectGuild(server.guild?.id ?? 0)}
                                 sx={{
                                     width: "90%"
                                 }}>
-                            {guild.name}
+                            {server.name}
                         </Button>
                     )}
                 </Grid>

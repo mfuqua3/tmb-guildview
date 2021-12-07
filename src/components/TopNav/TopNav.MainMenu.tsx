@@ -5,6 +5,7 @@ import SportsEsportsIcon from '@mui/icons-material/SportsEsports';
 import {useGuild} from "../../utilities/hooks/useGuild";
 import {Link, useNavigate} from "react-router-dom";
 import {useMenu} from "../../utilities/hooks/useMenu";
+import ImportExportIcon from '@mui/icons-material/ImportExport';
 
 export interface TopNavMenuProps {
     edge?: false | "start" | "end" | undefined
@@ -16,6 +17,10 @@ function TopNavMainMenu(props: TopNavMenuProps) {
     const handleGuildSelect = () => {
         close();
         navigate("/guilds");
+    }
+    const handleImportSelect = () => {
+        close();
+        navigate("/import");
     }
     const [guild] = useGuild();
     return (
@@ -45,9 +50,18 @@ function TopNavMainMenu(props: TopNavMenuProps) {
                         <SportsEsportsIcon/>
                     </ListItemIcon>
                     <ListItemText>
-                        {!!guild ? guild.name : "Select Guild"}
+                        {!!guild ? `Select Guild (${guild.name})` : "Select Guild"}
                     </ListItemText>
                 </MenuItem>
+                {!!guild &&
+                <MenuItem color={"secondary"} onClick={handleImportSelect}>
+                    <ListItemIcon>
+                        <ImportExportIcon/>
+                    </ListItemIcon>
+                    <ListItemText>
+                        {"Import TMB Data"}
+                    </ListItemText>
+                </MenuItem>}
             </Menu>
         </>
     )
