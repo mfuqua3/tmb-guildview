@@ -21,7 +21,7 @@ function Import() {
         if (tmbImport === null || tmbImport.completed || tmbImport.faulted || tmbImport.progress >= 100) {
             return;
         }
-        await new Promise(r => setTimeout(r, 2000));
+        await new Promise(r => setTimeout(r, 1000));
         try {
             const result = await ImportApi.getStatus(tmbImport.id);
             setTmbImport(result);
