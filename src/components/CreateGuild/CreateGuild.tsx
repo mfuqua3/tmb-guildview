@@ -1,11 +1,11 @@
 import React, {useState} from "react";
 import {Button, NativeSelect, Typography} from "@mui/material";
-import {GuildSummary} from "../../models";
+import {ServerSummary} from "../../models";
 import {GuildsApi} from "../../api/GuildsApi";
 import {useGuild} from "../../utilities/hooks/useGuild";
 
 export interface CreateGuildProps {
-    guilds: GuildSummary[];
+    guilds: ServerSummary[];
 }
 function CreateGuild({guilds}: CreateGuildProps) {
     const itemSx = {
@@ -17,8 +17,7 @@ function CreateGuild({guilds}: CreateGuildProps) {
         if(selectedGuild === null){
             throw new Error("No guild has been selected");
         }
-        debugger;
-        const resp = await GuildsApi.claimGuild({guildId: selectedGuild});
+        const resp = await GuildsApi.claimGuild({serverId: selectedGuild});
         await changeGuild(resp.id);
     }
     return (
@@ -35,7 +34,7 @@ function CreateGuild({guilds}: CreateGuildProps) {
                     name: 'Server',
                     id: 'uncontrolled-native'
                 }}>
-                {guilds?.filter(g => !g.configured).map(g =>
+                {guilds?.filter(g => !g.guild).map(g =>
                     <option value={g.id}>{g.name}</option>
                 )}
             </NativeSelect>

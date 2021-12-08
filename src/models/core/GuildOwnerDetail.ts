@@ -1,7 +1,7 @@
 import {UserSummary} from "./UserSummary";
 
 export interface GuildOwnerDetail {
-    id: string;
+    id: number;
     name: string;
     owner: UserSummary;
 }

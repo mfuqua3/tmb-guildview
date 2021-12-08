@@ -7,14 +7,14 @@ export interface GuildProviderProps {
     children: ReactNode;
 }
 export interface GuildProviderState {
-    changeGuild(guildId: string): Promise<void>;
+    changeGuild(guildId: number): Promise<void>;
     currentGuild: GuildClaim | null;
 }
 export const GuildContext = React.createContext<GuildProviderState | null>(null);
 
 function GuildProvider({children}: GuildProviderProps) {
     const {token, updateToken} = useToken();
-    async function changeGuild(guildId: string): Promise<void>{
+    async function changeGuild(guildId: number): Promise<void>{
         const token = await GuildsApi.changeGuildScope(guildId);
         updateToken(token.accessToken);
     }

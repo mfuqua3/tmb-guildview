@@ -24,7 +24,7 @@ function MainLayout() {
                 </AppBar>
             </MenuProvider>
             <Grid id="main-layout-body"
-                  className={"layout-body "}
+                  className={"layout-body"}
                   container item direction="column"
                   alignItems="stretch" wrap="nowrap" xs={12}>
                 <ScrollWrapper>

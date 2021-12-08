@@ -9,6 +9,7 @@ import {useUserSummary} from "./utilities/hooks/useUserSummary";
 import {GuildSelect} from "./scenes/GuildSelect";
 import GuildProvider from "./utilities/providers/GuildProvider";
 import {Home} from "./scenes/Home";
+import {Import} from "./scenes/Import";
 
 function App() {
     const user = useUserSummary();
@@ -19,6 +20,7 @@ function App() {
                     <Route path={"/"} element={<PrivateRoute/>}>
                         <Route element={<GuildScopedRoute />}>
                             <Route index element={<Home />}/>
+                            <Route path={"import"} element={<Import />} />
                         </Route>
                         <Route path={"guilds"} element={<GuildSelect />} />
                     </Route>
