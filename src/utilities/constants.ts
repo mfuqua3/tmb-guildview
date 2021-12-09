@@ -11,6 +11,6 @@ export const GuildViewConstants = {
         audience: "aud",
         guildId: "guild_id",
         guildName: "guild_name",
-        guildRole: "guildRole"
+        guildRole: "guild_role"
     }
 }

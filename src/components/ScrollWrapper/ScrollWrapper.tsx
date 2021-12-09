@@ -13,7 +13,7 @@ function ScrollWrapper({children}: ScrollWrapperProps) {
             sx={{
                 width: "100%",
                 height: "100%",
-                overflowY: "scroll"
+                overflowY: "auto"
             }}>
             {children}
         </Box>

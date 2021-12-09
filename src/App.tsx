@@ -20,6 +20,8 @@ function App() {
                     <Route path={"/"} element={<PrivateRoute/>}>
                         <Route element={<GuildScopedRoute />}>
                             <Route index element={<Home />}/>
+                        </Route>
+                        <Route element={<GuildScopedRoute roles={["Owner"]}/>}>
                             <Route path={"import"} element={<Import />} />
                         </Route>
                         <Route path={"guilds"} element={<GuildSelect />} />

@@ -6,6 +6,8 @@ import {useGuild} from "../../utilities/hooks/useGuild";
 import {Link, useNavigate} from "react-router-dom";
 import {useMenu} from "../../utilities/hooks/useMenu";
 import ImportExportIcon from '@mui/icons-material/ImportExport';
+import {GuildMenuItem} from "../GuildMenuItem";
+import AddBoxIcon from '@mui/icons-material/AddBox';
 
 export interface TopNavMenuProps {
     edge?: false | "start" | "end" | undefined
@@ -53,15 +55,16 @@ function TopNavMainMenu(props: TopNavMenuProps) {
                         {!!guild ? `Select Guild (${guild.name})` : "Select Guild"}
                     </ListItemText>
                 </MenuItem>
-                {!!guild &&
-                <MenuItem color={"secondary"} onClick={handleImportSelect}>
-                    <ListItemIcon>
-                        <ImportExportIcon/>
-                    </ListItemIcon>
-                    <ListItemText>
-                        {"Import TMB Data"}
-                    </ListItemText>
-                </MenuItem>}
+                <GuildMenuItem
+                    onClick={handleImportSelect}
+                    icon={<ImportExportIcon/>}
+                    title={"Import TMB Data"}
+                    roles={["Owner"]} />
+                <GuildMenuItem
+                    onClick={()=>console.log("creating")}
+                    icon={<AddBoxIcon/>}
+                    title={"Create PreVote"}
+                    roles={["Owner", "Admin"]} />
             </Menu>
         </>
     )
