@@ -7,6 +7,7 @@ import {CssBaseline, ThemeProvider} from "@mui/material";
 import {defaultTheme} from "./utilities/themes/defaultTheme";
 import AuthProvider from "./utilities/providers/AuthProvider";
 import {BrowserRouter as Router} from "react-router-dom";
+import ModalProvider from "./utilities/providers/ModalProvider";
 
 ReactDOM.render(
     <React.StrictMode>
@@ -14,7 +15,9 @@ ReactDOM.render(
             <CssBaseline/>
             <Router>
                 <AuthProvider>
-                    <App/>
+                    <ModalProvider>
+                        <App/>
+                    </ModalProvider>
                 </AuthProvider>
             </Router>
         </ThemeProvider>
