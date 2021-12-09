@@ -64,23 +64,27 @@ function ModalProvider({children}: ModalProviderProps) {
                 BackdropProps={{
                     timeout: 500,
                 }}>
-                {/* eslint-disable-next-line react/prop-types */}
                 <Fade in={!!modalState.props && modalState.props.isOpen}>
-                    {/* eslint-disable-next-line react/prop-types */}
-                    <Box display={"flex"} alignItems={"center"} justifyContent={"center"}
-                        sx={theme=>(
-                        {
-                            width: modalSize(modalState.props?.size),
-                            backGroundColor: theme.palette.background.paper,
-                            borderRadius: "4px",
-                            minWidth: "35%",
-                            padding: theme.spacing(2, 4, 3),
-                        })}>
-                        {modalState.component}
-                    </Box>
+                        <Box
+                            sx={
+                                {
+                                    position: 'absolute' as 'absolute',
+                                    top: '50%',
+                                    left: '50%',
+                                    transform: 'translate(-50%, -50%)',
+                                    width: modalSize(modalState.props?.size),
+                                    backgroundColor: "background.paper",
+                                    borderRadius: "4px",
+                                    minWidth: "35%",
+                                    p: [2, 4, 3],
+                                }}>
+                            {modalState.component}
+                        </Box>
                 </Fade>
             </Modal>}
+            {children}
         </ModalContext.Provider>
     )
 }
+
 export default React.memo(ModalProvider);

@@ -1,5 +1,14 @@
 import React, {ReactNode} from "react";
-import {IconButton, IconButtonProps, ListItemIcon, ListItemText, Menu, MenuItem, MenuItemProps} from "@mui/material";
+import {
+    IconButton,
+    IconButtonProps,
+    ListItemIcon,
+    ListItemText,
+    Menu,
+    MenuItem,
+    MenuItemProps,
+    Typography
+} from "@mui/material";
 import MenuIcon from "@mui/icons-material/Menu";
 import SportsEsportsIcon from '@mui/icons-material/SportsEsports';
 import {useGuild} from "../../utilities/hooks/useGuild";
@@ -8,6 +17,7 @@ import {useMenu} from "../../utilities/hooks/useMenu";
 import ImportExportIcon from '@mui/icons-material/ImportExport';
 import {GuildMenuItem} from "../GuildMenuItem";
 import AddBoxIcon from '@mui/icons-material/AddBox';
+import {useModal} from "../../utilities/hooks/useModal";
 
 export interface TopNavMenuProps {
     edge?: false | "start" | "end" | undefined
@@ -16,6 +26,7 @@ export interface TopNavMenuProps {
 function TopNavMainMenu(props: TopNavMenuProps) {
     const {open, close, isOpen, anchorEl} = useMenu();
     const navigate = useNavigate();
+    const {showModal, hideModal} = useModal();
     const handleGuildSelect = () => {
         close();
         navigate("/guilds");
@@ -23,6 +34,10 @@ function TopNavMainMenu(props: TopNavMenuProps) {
     const handleImportSelect = () => {
         close();
         navigate("/import");
+    }
+    const handleCreatePreVoteSelect = () => {
+        close();
+        showModal(<Typography>{"test"}</Typography>)
     }
     const [guild] = useGuild();
     return (
@@ -61,7 +76,7 @@ function TopNavMainMenu(props: TopNavMenuProps) {
                     title={"Import TMB Data"}
                     roles={["Owner"]} />
                 <GuildMenuItem
-                    onClick={()=>console.log("creating")}
+                    onClick={handleCreatePreVoteSelect}
                     icon={<AddBoxIcon/>}
                     title={"Create PreVote"}
                     roles={["Owner", "Admin"]} />
