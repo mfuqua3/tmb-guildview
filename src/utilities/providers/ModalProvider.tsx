@@ -1,9 +1,10 @@
 import React, {ReactNode, useState} from "react";
 import {Backdrop, Box, Fade, Modal} from "@mui/material";
 
+export type ModalSize ="small" | "large" | "fullscreen" | "inherit";
 export interface ModalProps {
     isOpen: boolean;
-    size?: "small" | "large" | "fullscreen" | "inherit"
+    size?: ModalSize;
 }
 
 export interface ModalState {
@@ -24,7 +25,10 @@ export interface ModalProviderProps {
 function ModalProvider({children}: ModalProviderProps) {
     const initialState: ModalState = {
         component: null,
-        props: {isOpen: false, size: "inherit"},
+        props: {
+            isOpen: false,
+            size: "inherit"
+        },
         showModal,
         hideModal
     };
@@ -76,7 +80,6 @@ function ModalProvider({children}: ModalProviderProps) {
                                     backgroundColor: "background.paper",
                                     borderRadius: "4px",
                                     minWidth: "35%",
-                                    p: [2, 4, 3],
                                 }}>
                             {modalState.component}
                         </Box>

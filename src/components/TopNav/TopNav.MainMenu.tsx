@@ -1,23 +1,21 @@
-import React, {ReactNode} from "react";
+import React from "react";
 import {
     IconButton,
-    IconButtonProps,
     ListItemIcon,
     ListItemText,
     Menu,
-    MenuItem,
-    MenuItemProps,
-    Typography
+    MenuItem
 } from "@mui/material";
 import MenuIcon from "@mui/icons-material/Menu";
 import SportsEsportsIcon from '@mui/icons-material/SportsEsports';
 import {useGuild} from "../../utilities/hooks/useGuild";
-import {Link, useNavigate} from "react-router-dom";
+import {useNavigate} from "react-router-dom";
 import {useMenu} from "../../utilities/hooks/useMenu";
 import ImportExportIcon from '@mui/icons-material/ImportExport';
 import {GuildMenuItem} from "../GuildMenuItem";
 import AddBoxIcon from '@mui/icons-material/AddBox';
 import {useModal} from "../../utilities/hooks/useModal";
+import {PreVoteConfiguration} from "../../scenes/PreVoteConfiguration";
 
 export interface TopNavMenuProps {
     edge?: false | "start" | "end" | undefined
@@ -26,7 +24,7 @@ export interface TopNavMenuProps {
 function TopNavMainMenu(props: TopNavMenuProps) {
     const {open, close, isOpen, anchorEl} = useMenu();
     const navigate = useNavigate();
-    const {showModal, hideModal} = useModal();
+    const {showModal} = useModal("large");
     const handleGuildSelect = () => {
         close();
         navigate("/guilds");
@@ -37,7 +35,7 @@ function TopNavMainMenu(props: TopNavMenuProps) {
     }
     const handleCreatePreVoteSelect = () => {
         close();
-        showModal(<Typography>{"test"}</Typography>)
+        showModal(<PreVoteConfiguration />)
     }
     const [guild] = useGuild();
     return (
