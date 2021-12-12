@@ -3,9 +3,12 @@ import {IconButton, ListItemIcon, ListItemText, Menu, MenuItem} from "@mui/mater
 import {useMenu} from "../../utilities/hooks/useMenu";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import PersonOutlineIcon from '@mui/icons-material/PersonOutline';
+import {AuthMenuItem} from "../AuthMenuItem";
+import {useAuth} from "../../utilities/hooks/useAuth";
 
 function TopNavUserMenu() {
     const {open, close, isOpen, anchorEl} = useMenu();
+    const {signOut} = useAuth();
     return (
         <>
             <IconButton color={"inherit"} aria-label={"menu"}
@@ -28,14 +31,7 @@ function TopNavUserMenu() {
                 }}
                 open={isOpen}
                 onClose={close}>
-                <MenuItem color={"secondary"}>
-                    <ListItemIcon>
-                        <PersonOutlineIcon/>
-                    </ListItemIcon>
-                    <ListItemText>
-                        Sign Out
-                    </ListItemText>
-                </MenuItem>
+                <AuthMenuItem icon={<PersonOutlineIcon />} title={"Sign Out"} onClick={signOut}/>
             </Menu>
         </>
     )

@@ -16,6 +16,7 @@ import {GuildMenuItem} from "../GuildMenuItem";
 import AddBoxIcon from '@mui/icons-material/AddBox';
 import {useModal} from "../../utilities/hooks/useModal";
 import {PreVoteConfiguration} from "../../scenes/PreVoteConfiguration";
+import {AuthMenuItem} from "../AuthMenuItem";
 
 export interface TopNavMenuProps {
     edge?: false | "start" | "end" | undefined
@@ -35,7 +36,7 @@ function TopNavMainMenu(props: TopNavMenuProps) {
     }
     const handleCreatePreVoteSelect = () => {
         close();
-        showModal(<PreVoteConfiguration />)
+        showModal(<PreVoteConfiguration/>)
     }
     const [guild] = useGuild();
     return (
@@ -60,24 +61,20 @@ function TopNavMainMenu(props: TopNavMenuProps) {
                 }}
                 open={isOpen}
                 onClose={close}>
-                <MenuItem color={"secondary"} onClick={handleGuildSelect}>
-                    <ListItemIcon>
-                        <SportsEsportsIcon/>
-                    </ListItemIcon>
-                    <ListItemText>
-                        {!!guild ? `Select Guild (${guild.name})` : "Select Guild"}
-                    </ListItemText>
-                </MenuItem>
+                <AuthMenuItem
+                    onClick={handleGuildSelect}
+                    icon={<SportsEsportsIcon/>}
+                    title={!!guild ? `Select Guild (${guild.name})` : "Select Guild"}/>
                 <GuildMenuItem
                     onClick={handleImportSelect}
                     icon={<ImportExportIcon/>}
                     title={"Import TMB Data"}
-                    roles={["Owner"]} />
+                    roles={["Owner"]}/>
                 <GuildMenuItem
                     onClick={handleCreatePreVoteSelect}
                     icon={<AddBoxIcon/>}
                     title={"Create PreVote"}
-                    roles={["Owner", "Admin"]} />
+                    roles={["Owner", "Admin"]}/>
             </Menu>
         </>
     )

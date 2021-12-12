@@ -11,12 +11,13 @@ export interface TokenProviderProps {
 export interface TokenProviderState {
     updateToken(jwt: string):void;
     token: JwtToken<UserSummary> | null;
+    clearToken():void;
 }
 export const TokenContext = createContext<TokenProviderState | null>(null);
 
 function TokenProvider({children} : TokenProviderProps) {
     const constants = GuildViewConstants.claims;
-    const {getValue, setValue} = useSessionStorage(key);
+    const {getValue, setValue, clearValue} = useSessionStorage(key);
     const [token, setToken] = useState<JwtToken<UserSummary> | null>(()=>{
         const currentToken = getValue();
         if(!currentToken){
@@ -25,6 +26,11 @@ function TokenProvider({children} : TokenProviderProps) {
         axios.defaults.headers.common = {'Authorization': `Bearer ${currentToken}`};
         return decodeToken(currentToken);
     });
+    function clearToken(): void {
+        clearValue();
+        setToken(null);
+        delete axios.defaults.headers.common["Authorization"];
+    }
     function updateToken(jwt: string): void {
         setValue(jwt);
         axios.defaults.headers.common = {'Authorization': `Bearer ${jwt}`};
@@ -76,7 +82,7 @@ function TokenProvider({children} : TokenProviderProps) {
         }
     }
     return (
-        <TokenContext.Provider value={{updateToken, token}}>
+        <TokenContext.Provider value={{updateToken, token, clearToken}}>
             {children}
         </TokenContext.Provider>
     )

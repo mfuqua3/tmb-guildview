@@ -2,6 +2,7 @@ import React, {ReactNode} from "react";
 import {useGuild} from "../../utilities/hooks/useGuild";
 import {ListItemIcon, ListItemText, MenuItem} from "@mui/material";
 import {GuildRole} from "../../utilities/types";
+import {AuthMenuItem} from "../AuthMenuItem";
 
 export interface GuildMenuItemProps {
     roles?: GuildRole[];
@@ -15,14 +16,7 @@ function GuildMenuItem(props: GuildMenuItemProps) {
         <>
             {!!guild &&
             (!props.roles || props.roles.includes(guild.role)) &&
-            <MenuItem onClick={props.onClick}>
-                <ListItemIcon>
-                    {props.icon}
-                </ListItemIcon>
-                <ListItemText>
-                    {props.title}
-                </ListItemText>
-            </MenuItem>}
+            <AuthMenuItem title={props.title} onClick={props.onClick} icon={props.icon} />}
         </>
     );
 }
