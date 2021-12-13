@@ -4,3 +4,4 @@ export interface ConflictOfInterestConfiguration {
     allowObjecting: boolean;
     allowCommenting: boolean;
 }
+

@@ -84,8 +84,7 @@ function Stepper(props: StepperProps) {
             </Box>
             <ScrollWrapper>
                 <Box sx={{
-                    minHeight: "50vh",
-                    p: 2,
+                    height: "50vh",
                     backgroundColor: "background.default"
                 }}>
                     {props.children[props.currentStep]}

@@ -8,17 +8,21 @@ import {defaultTheme} from "./utilities/themes/defaultTheme";
 import AuthProvider from "./utilities/providers/AuthProvider";
 import {BrowserRouter as Router} from "react-router-dom";
 import ModalProvider from "./utilities/providers/ModalProvider";
+import AdapterDateFns from '@mui/lab/AdapterDateFns';
+import {LocalizationProvider} from "@mui/lab";
 
 ReactDOM.render(
     <React.StrictMode>
         <ThemeProvider theme={defaultTheme}>
             <CssBaseline/>
             <Router>
-                <AuthProvider>
-                    <ModalProvider>
-                        <App/>
-                    </ModalProvider>
-                </AuthProvider>
+                <LocalizationProvider dateAdapter={AdapterDateFns}>
+                    <AuthProvider>
+                        <ModalProvider>
+                            <App/>
+                        </ModalProvider>
+                    </AuthProvider>
+                </LocalizationProvider>
             </Router>
         </ThemeProvider>
     </React.StrictMode>,
