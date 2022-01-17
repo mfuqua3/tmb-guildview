@@ -1,6 +1,6 @@
 import React from "react";
 import axios from "axios";
-import {ClaimGuildRequest, GuildOwnerDetail, ServerSummary, Token} from "../models";
+import {ClaimGuildRequest, GuildOwnerDetail, GuildUser, ServerSummary, Token} from "../models";
 
 const root = `${process.env["REACT_APP_API_ROOT"]}/guilds`;
 
@@ -22,5 +22,10 @@ export const GuildsApi = {
     releaseGuild: async (id: string): Promise<void> => {
         const url = `${root}/release/${id}`;
         await axios.delete(url);
+    },
+    getGuildUsers: async (): Promise<GuildUser[]> => {
+        const url = `${root}/users`
+        const resp = await axios.get<GuildUser[]>(url);
+        return resp.data;
     }
 }
