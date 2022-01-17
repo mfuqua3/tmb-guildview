@@ -18,3 +18,4 @@ export * from "./core/VoterSelectionConfiguration";
 export * from "./core/VoteSubmissionRequirement";
 export * from "./core/VoteVisibility";
 export * from "./core/GuildUser";
+export * from "./core/PreVoteConfiguration";
